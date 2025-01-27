@@ -1,4 +1,4 @@
-<form class="md:w-1/2 space-y-5"> <!-- Separada todos sus hijos o cada boton -->
+<form class="md:w-1/2 space-y-5" wire:submit.prevent='crearVacante'> <!-- Separada todos sus hijos o cada boton -->
     <!--Boton para vacante-->
     <div>
         <x-input-label for="titulo" :value="__('Nombre de la vacante')" />
@@ -7,17 +7,17 @@
             type="text" wire:model="titulo" :value="old('titulo')" required autofocus autocomplete="titulo"
             placeholder="Nombre de la vacante" />
         <x-input-error :messages="$errors->get('titulo')" class="mt-2" />
-    </div>
+        </div>
     <!--Boton para seleccionar salario -->
 
     <div>
         <x-input-label for="salario" :value="__('Salario mensual')" />
         <select wire:model="salario" id="salario"
             class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full">
-        <option >-- Seleccione --</option>
-        @foreach ($salarios as $salario)
-            <option value="{{ $salario->id }}">{{ $salario->salario }}</option>
-        @endforeach
+            <option value="">-- Seleccione --</option>
+            @foreach ($salarios as $salario)
+                <option value="{{ $salario->id }}">{{ $salario->salario }}</option>
+            @endforeach
         </select>
         <x-input-error :messages="$errors->get('salario')" class="mt-2" />
     </div>
@@ -28,7 +28,7 @@
         <x-input-label for="categoria" :value="__('Categoria')" />
         <select wire:model="categoria" id="categoria"
             class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full">
-            <option >-- Seleccione --</option>
+            <option value="">-- Seleccione --</option>
             @foreach ($categorias as $categoria)
                 <option value="{{ $categoria->id }}">{{ $categoria->categoria }}</option>
             @endforeach
@@ -72,7 +72,13 @@
         <x-input-label for="imagen" :value="__('Imagen')" />
         <x-text-input id="imagen"
             class="block mt-1 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full"
-            type="file" name="imagen" required />
+            type="file" wire:model="imagen" accept="image/*" required /> <!--accept= "imagen/*" Funciona para que pueda aceptar cualquier tipo de imagen -->
+            <div class="my-5 w-80">
+                @if ($imagen)
+                    Imagen:
+                    <img src="{{ $imagen->temporaryUrl() }}" alt="Imagen de la vacante">   <!--Esto funciona para que se pueda previsualizar la imagen antes que se suba al servidor --> 
+                @endif <!--temporaryUrl Muestra la imagen temporalmente  -->
+            </div>
         <x-input-error :messages="$errors->get('imagen')" class="mt-2" />
     </div>
 
@@ -80,3 +86,4 @@
         {{ __('Publicar vacante') }}
     </x-primary-button>
 </form>
+
