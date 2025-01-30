@@ -1,4 +1,4 @@
-<form class="md:w-1/2 space-y-5" wire:submit.prevent='crearVacante'> <!-- Separada todos sus hijos o cada boton -->
+<form class="md:w-1/2 space-y-5" wire:submit.prevent='editarVacante'> <!-- Separada todos sus hijos o cada boton -->
     <!--Boton para vacante-->
     <div>
         <x-input-label for="titulo" :value="__('Nombre de la vacante')" />
@@ -7,7 +7,7 @@
             type="text" wire:model="titulo" :value="old('titulo')" required autofocus autocomplete="titulo"
             placeholder="Nombre de la vacante" />
         <x-input-error :messages="$errors->get('titulo')" class="mt-2" />
-        </div>
+    </div>
     <!--Boton para seleccionar salario -->
 
     <div>
@@ -69,21 +69,28 @@
 
     <!--Boton para imagen-->
     <div>
-       {{--  <x-input-label for="imagen" :value="__('Imagen')" />
+
+        <div class="ny-5 w-80">
+            <x-input-label :value="__('Imagen Actual')" />
+            <img src="{{ asset('storage/vacantes/' . $imagen) }}" alt="{{ ' Imagen de la vacante ' . $titulo }}"
+                class="w-80">
+            <!--Esto funciona para que se pueda previsualizar la imagen antes que se suba al servidor -->
+        </div>
+        <x-input-label for="imagen" :value="__('Imagen')" />
         <x-text-input id="imagen"
             class="block mt-1 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full"
-            type="file" wire:model="imagen" accept="image/*" required /> <!--accept= "imagen/*" Funciona para que pueda aceptar cualquier tipo de imagen -->
-            <div class="my-5 w-80">
-                @if ($imagen)
-                    Imagen:
-                    <img src="{{ $imagen->temporaryUrl() }}" alt="Imagen de la vacante">   <!--Esto funciona para que se pueda previsualizar la imagen antes que se suba al servidor --> 
-                @endif <!--temporaryUrl Muestra la imagen temporalmente  -->
-            </div> --}}
-        <x-input-error :messages="$errors->get('imagen')" class="mt-2" />
+            type="file" wire:model="imagen_nueva" accept="image/*" />        <!--accept= "imagen/*" Funciona paraque pueda aceptar cualquier tipo de imagen -->
+        <div class="my-5 w-80">
+            @if ($imagen_nueva)
+                <x-input-label :value="__('Imagen nueva:')" />
+                <img src="{{ $imagen_nueva->temporaryUrl() }}" alt="Imagen de la vacante">
+                <!--Esto funciona para que se pueda previsualizar la imagen antes que se suba al servidor -->
+            @endif <!--temporaryUrl Muestra la imagen temporalmente  -->
+        </div>
+        <x-input-error :messages="$errors->get('imagen_nueva')" class="mt-2" />
     </div>
 
     <x-primary-button class="w-full justify-center">
-        {{ __('Publicar vacante') }}
+        {{ __('Guardar Cambios') }}
     </x-primary-button>
 </form>
-
