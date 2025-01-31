@@ -26,20 +26,16 @@ class VacanteController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Vacante $vacante)
     {
         //
+        return view('vacantes.show', [
+            'vacante' => $vacante
+        ]);
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -48,23 +44,7 @@ class VacanteController extends Controller
     {
         //
         $this->authorize('view', $vacante);
-        
+
         return view('vacantes.edit', compact('vacante'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }
