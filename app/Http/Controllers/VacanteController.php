@@ -13,6 +13,7 @@ class VacanteController extends Controller
     public function index()
     {
         //
+        $this->authorize('viewAny', Vacante::class);   
         return view('vacantes.index');
     }
 
@@ -22,6 +23,7 @@ class VacanteController extends Controller
     public function create()
     {
         //
+        $this->authorize('create', Vacante::class); // Se agrega esta línea para proteger la creación de vacantes   para que solo los usuarios con rol de "reclutador" puedan crear vacantes
         return view('vacantes.create');
     }
 

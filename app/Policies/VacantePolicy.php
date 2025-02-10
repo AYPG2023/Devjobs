@@ -14,7 +14,7 @@ class VacantePolicy
     public function viewAny(User $user): bool
     {
         // Por ejemplo, solo los usuarios autenticados pueden ver las vacantes
-        return $user !== null;
+        return $user->rol === 2;
     }
 
     /**
@@ -32,7 +32,7 @@ class VacantePolicy
     public function create(User $user): bool
     {
         // Por ejemplo, solo los usuarios con rol de "reclutador" pueden crear vacantes
-        return $user->rol === 'reclutador';
+        return $user->rol === 2;
     }
 
     /**
