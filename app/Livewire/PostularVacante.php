@@ -2,6 +2,7 @@
 namespace App\Livewire;
 
 use App\Models\Vacante;
+use App\Notifications\NuevoCandidato;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -34,6 +35,9 @@ class PostularVacante extends Component
             'user_id' => auth()->user()->id,
             'cv' => $datos['cv'],
         ]);
+
+        // Crear notificaciones
+        $this->vacante->reclutador->notify(new NuevoCandidato($this->vacante->id, $this->vacante->titulo, auth()->user()->id));
 
         // Limpiar el campo
         $this->cv = null;
